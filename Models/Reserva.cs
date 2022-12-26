@@ -17,27 +17,70 @@ namespace DesafioProjetoHospedagem.Models
         {
             // TODO: Verificar se a capacidade é maior ou igual ao número de hóspedes sendo recebido
             // *IMPLEMENTE AQUI*
-            if (true)
+            int capacidadeSuite = 0;
+
+            if(Suite == null) 
             {
-                Hospedes = hospedes;
+                capacidadeSuite = hospedes.Count;
+                // Assim consigo adicinar a lista sem problemas
             }
             else
             {
-                // TODO: Retornar uma exception caso a capacidade seja menor que o número de hóspedes recebido
-                // *IMPLEMENTE AQUI*
+                capacidadeSuite = Suite.Capacidade;
+            }
+
+            try
+            {
+                if (verificaCapacidade(hospedes.Count, capacidadeSuite))
+                {
+                    Hospedes = hospedes;
+                }
+            }
+            catch ( Exception ex )
+            {
+                Console.WriteLine($"Ocorreu um erro: {ex}");
             }
         }
 
         public void CadastrarSuite(Suite suite)
         {
-            Suite = suite;
+            int quantidadeHospedes = 0;
+
+            if(Hospedes == null)
+            {
+                quantidadeHospedes = suite.Capacidade;
+                //Assim adiciona a suite normalmente
+            }
+            else
+            {
+                quantidadeHospedes = ObterQuantidadeHospedes();
+            }
+
+            if(verificaCapacidade(quantidadeHospedes, suite.Capacidade))
+            {
+                Console.WriteLine("Suite adicionada à Reserva com Sucesso!");
+                Suite = suite;
+            }
+            else
+            {
+                Console.WriteLine("Suite não suporta a quantidade de hospédes!");                
+            }
+            
         }
 
         public int ObterQuantidadeHospedes()
         {
             // TODO: Retorna a quantidade de hóspedes (propriedade Hospedes)
             // *IMPLEMENTE AQUI*
-            return 0;
+            try
+            {
+            return Hospedes.Count;
+            }
+            catch(NullReferenceException ex)
+            {
+                Console.WriteLine($"Não há hóspedes cadastrados {ex}");
+                return 0;
+            }
         }
 
         public decimal CalcularValorDiaria()
@@ -45,16 +88,48 @@ namespace DesafioProjetoHospedagem.Models
             // TODO: Retorna o valor da diária
             // Cálculo: DiasReservados X Suite.ValorDiaria
             // *IMPLEMENTE AQUI*
-            decimal valor = 0;
 
-            // Regra: Caso os dias reservados forem maior ou igual a 10, conceder um desconto de 10%
-            // *IMPLEMENTE AQUI*
-            if (true)
+            try
             {
-                valor = 0;
-            }
+                decimal valor = this.DiasReservados * Suite.ValorDiaria;
 
-            return valor;
+                // Regra: Caso os dias reservados forem maior ou igual a 10, conceder um desconto de 10%
+                // *IMPLEMENTE AQUI*
+                bool diasMaiorIgualDez = (this.DiasReservados >= 10);
+
+                exibeMensagem(diasMaiorIgualDez);
+
+                if (diasMaiorIgualDez)
+                {
+                    valor -= (valor * 0.1M) ;
+                    return valor;
+                } 
+                else 
+                {
+                    return valor;
+                }
+            }
+            catch(Exception ex)
+            {
+                Console.WriteLine($"Erro ocorrido: {ex.Message}");
+                return 0;
+            }
+        }
+
+        public bool verificaCapacidade(int quantidadeHospede, int capacidadeSuite)
+        {
+            return quantidadeHospede <= capacidadeSuite;
+        }
+        public void exibeMensagem(bool condicao)
+        {
+            if(condicao)
+            {
+                Console.WriteLine("Desconto de 10% aplicado");
+            }
+            else
+            {
+                Console.WriteLine("Não possuí desconto");
+            }
         }
     }
 }
