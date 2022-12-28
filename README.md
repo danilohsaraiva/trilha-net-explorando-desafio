@@ -19,3 +19,8 @@ O seu programa deverá cálcular corretamente os valores dos métodos da classe 
 
 ## Solução
 O código está pela metade, e você deverá dar continuidade obedecendo as regras descritas acima, para que no final, tenhamos um programa funcional. Procure pela palavra comentada "TODO" no código, em seguida, implemente conforme as regras acima.
+
+## Feito
+Além do que foi proposto acima, foi desenvolvido uma lógica que possibilita adicionar tanto uma lista de pessoas quanto uma suíte a primeiro momento.<br>
+A partir do momento que há uma lista de pessoas na reserva, a suíte a ser cadastrada deve comportar a quantidade de pessoas e vice-versa.<br>
+Também foram criados novos métodos, o mais relevante entre eles é o método booleano "VerificaCapacidade" que verifica em ambos os casos se há capacidade de adicionar tanto a suíte quanto a lista de pessoas à reserva.

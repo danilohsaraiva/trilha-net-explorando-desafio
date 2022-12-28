@@ -1,9 +1,11 @@
 namespace DesafioProjetoHospedagem.Models;
 
+    /// <summary>
+    /// Representa a classe Pessoa
+    /// </summary>
 public class Pessoa
 {
-    public Pessoa() { }
-
+       public Pessoa() { }
     public Pessoa(string nome)
     {
         Nome = nome;

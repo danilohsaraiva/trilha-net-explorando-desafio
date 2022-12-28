@@ -12,7 +12,7 @@ namespace DesafioProjetoHospedagem.Models
         {
             DiasReservados = diasReservados;
         }
-
+       
         public void CadastrarHospedes(List<Pessoa> hospedes)
         {
             // TODO: Verificar se a capacidade é maior ou igual ao número de hóspedes sendo recebido
@@ -63,7 +63,7 @@ namespace DesafioProjetoHospedagem.Models
             }
             else
             {
-                Console.WriteLine("Suite não suporta a quantidade de hospédes!");                
+                Console.WriteLine("Suíte não adiconada a reserva, pois não suporta a quantidade de hóspedes");                
             }
             
         }
@@ -78,7 +78,7 @@ namespace DesafioProjetoHospedagem.Models
             }
             catch(NullReferenceException ex)
             {
-                Console.WriteLine($"Não há hóspedes cadastrados {ex}");
+                Console.WriteLine($"Não há hóspedes cadastrados, ocorreu uma exceção: {ex.Message}");
                 return 0;
             }
         }
@@ -109,9 +109,14 @@ namespace DesafioProjetoHospedagem.Models
                     return valor;
                 }
             }
+            catch(NullReferenceException ex)
+            {
+                Console.WriteLine($"Não há uma suíte cadastrada, ocorreu uma exceção: {ex.Message}");
+                return 0;
+            }
             catch(Exception ex)
             {
-                Console.WriteLine($"Erro ocorrido: {ex.Message}");
+                Console.WriteLine($"Exceção genérica: {ex}");
                 return 0;
             }
         }
@@ -130,6 +135,32 @@ namespace DesafioProjetoHospedagem.Models
             {
                 Console.WriteLine("Não possuí desconto");
             }
+        }
+
+        public void ResumoReserva()
+        {
+            Console.WriteLine("*********** RESUMO RESERVA ***********");
+            Console.WriteLine($"Hóspedes: {ObterQuantidadeHospedes()}\nCapacidade da Suite: {(Suite!=null?$"{Suite.Capacidade}":"Não há suite cadastrada")}");
+            Console.WriteLine($"Quantidade de dias de estádia: {DiasReservados}\nValor diária: {CalcularValorDiaria()}");
+
+            try
+            {
+                foreach(Pessoa a in Hospedes)
+                {
+                Console.WriteLine(a.Nome);
+                }
+
+            }
+            catch(NullReferenceException ex)
+            {
+                Console.WriteLine("Lista não disponível!");
+                Console.WriteLine($"Ocorreu uma exceção, não há hóspedes cadastrados: {ex.Message}");
+            }
+            
+            Console.WriteLine("**************************************");
+        
+
+
         }
     }
 }
